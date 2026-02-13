@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AethelonAI • Smart Energy Home Automation Powered by AI</title>
+
+  <!-- Bootstrap CSS -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  />
+
+  <!-- Google Font -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <style>
+    :root {
+      --primary: #2563eb;
+      --primary-soft: #dbeafe;
+      --accent: #22c55e;
+      --dark: #0f172a;
+      --muted: #64748b;
+    }
+
+    * {
+      font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    body {
+      background-color: #020617;
+      color: #e5e7eb;
+    }
+
+    .navbar {
+      background: rgba(15, 23, 42, 0.9);
+      backdrop-filter: blur(14px);
+    }
+
+    .navbar-brand span {
+      color: var(--primary);
+      font-weight: 700;
+    }
+
+    .hero {
+      min-height: 90vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      padding-top: 5rem;
+      padding-bottom: 5rem;
+    }
+
+    .hero-bg-glow {
+      position: absolute;
+      inset: -20%;
+      background:
+        radial-gradient(circle at top left, rgba(56, 189, 248, 0.18), transparent 55%),
+        radial-gradient(circle at bottom right, rgba(34, 197, 94, 0.2), transparent 50%);
+      opacity: 0.9;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.25rem 0.75rem;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .hero-badge span {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 18px;
+      height: 18px;
+      border-radius: 999px;
+      background: var(--primary-soft);
+      color: #1d4ed8;
+      font-size: 0.7rem;
+      font-weight: 700;
+    }
+
+    .hero-title {
+      font-size: clamp(2.2rem, 3vw + 1rem, 3.2rem);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+    }
+
+    .hero-title span {
+      background: linear-gradient(to right, #38bdf8, #22c55e);
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .hero-subtitle {
+      color: var(--muted);
+      max-width: 34rem;
+    }
+
+    .btn-primary-custom {
+      background: linear-gradient(135deg, #2563eb, #1d4ed8);
+      border: none;
+      border-radius: 999px;
+      padding-inline: 1.7rem;
+      padding-block: 0.7rem;
+      font-weight: 500;
+      box-shadow: 0 10px 25px rgba(37, 99, 235, 0.45);
+    }
+
+    .btn-outline-custom {
+      border-radius: 999px;
+      border-color: rgba(148, 163, 184, 0.9);
+      color: #e5e7eb;
+      padding-inline: 1.5rem;
+      padding-block: 0.7rem;
+    }
+
+    .btn-outline-custom:hover {
+      background-color: rgba(15, 23, 42, 0.9);
+      color: #e5e7eb;
+    }
+
+    .hero-highlight {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.25rem;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    .hero-highlight .item {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .hero-highlight .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: linear-gradient(to right, #22c55e, #38bdf8);
+    }
+
+    .hero-card {
+      background: radial-gradient(circle at top, rgba(15, 23, 42, 0.95), rgba(15, 23, 42, 0.98));
+      border-radius: 1.5rem;
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      box-shadow: 0 20px 60px rgba(15, 23, 42, 0.8);
+      padding: 1.5rem;
+    }
+
+    .hero-tag {
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .hero-metric {
+      font-size: 2.1rem;
+      font-weight: 600;
+    }
+
+    .hero-mini-chart {
+      height: 70px;
+      border-radius: 0.75rem;
+      background: linear-gradient(135deg, rgba(34, 197, 94, 0.12), rgba(56, 189, 248, 0.1));
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-mini-chart::before {
+      content: "";
+      position: absolute;
+      inset: 18px 12px;
+      border-radius: 999px;
+      border: 1px dashed rgba(148, 163, 184, 0.5);
+    }
+
+    .hero-mini-chart::after {
+      content: "";
+      position: absolute;
+      inset: 24px 22px 30px 22px;
+      border-radius: 999px;
+      background: linear-gradient(to right, #22c55e, #38bdf8);
+    }
+
+    .section {
+      padding-block: 4rem;
+    }
+
+    .section-title {
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+    }
+
+    .section-subtitle {
+      color: var(--muted);
+      max-width: 32rem;
+    }
+
+    .card-soft {
+      border-radius: 1.25rem;
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      background: radial-gradient(circle at top left, rgba(15, 23, 42, 0.96), rgba(15, 23, 42, 0.99));
+      height: 100%;
+    }
+
+    .badge-soft {
+      border-radius: 999px;
+      background-color: rgba(37, 99, 235, 0.08);
+      color: #bfdbfe;
+      font-size: 0.75rem;
+      padding: 0.25rem 0.75rem;
+    }
+
+    .list-check {
+      list-style: none;
+      padding-left: 0;
+      margin-bottom: 0;
+    }
+
+    .list-check li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.5rem;
+      margin-bottom: 0.45rem;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .list-check span {
+      flex-shrink: 0;
+      width: 18px;
+      height: 18px;
+      border-radius: 999px;
+      background-color: rgba(34, 197, 94, 0.14);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      color: #22c55e;
+    }
+
+    .pricing-card {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .pricing-card.highlight {
+      border-color: rgba(59, 130, 246, 0.9);
+      box-shadow: 0 18px 45px rgba(37, 99, 235, 0.45);
+    }
+
+    .pricing-pill {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      border-radius: 999px;
+      padding-inline: 0.75rem;
+      padding-block: 0.2rem;
+      background: linear-gradient(to right, #22c55e, #4ade80);
+      font-size: 0.7rem;
+      color: #022c22;
+      font-weight: 600;
+    }
+
+    .pricing-price {
+      font-size: 1.4rem;
+      font-weight: 500;
+    }
+
+    .contact-card input,
+    .contact-card select,
+    .contact-card textarea {
+      background-color: #020617;
+      border-color: rgba(148, 163, 184, 0.6);
+      color: #e5e7eb;
+    }
+
+    .contact-card input::placeholder,
+    .contact-card textarea::placeholder {
+      color: #6b7280;
+    }
+
+    .contact-card input:focus,
+    .contact-card textarea:focus,
+    .contact-card select:focus {
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 1px rgba(59, 130, 246, 0.35);
+    }
+
+    footer {
+      border-top: 1px solid rgba(31, 41, 55, 0.9);
+      color: #6b7280;
+    }
+
+    @media (max-width: 767.98px) {
+      .hero {
+        padding-top: 5.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg fixed-top border-bottom border-dark">
+    <div class="container">
+      <a class="navbar-brand fw-semibold text-light" href="#hero">
+        aethelon<span>ai</span>
+      </a>
+      <button
+        class="navbar-toggler text-light border-0"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarNav"
+        aria-controls="navbarNav"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon">
+          <span class="d-inline-block bg-light" style="width:20px;height:2px;display:block;margin:3px 0;"></span>
+          <span class="d-inline-block bg-light" style="width:20px;height:2px;display:block;margin:3px 0;"></span>
+          <span class="d-inline-block bg-light" style="width:20px;height:2px;display:block;margin:3px 0;"></span>
+        </span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav align-items-lg-center">
+          <li class="nav-item">
+            <a class="nav-link text-light" href="#what-we-do">What we do</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-light" href="#packages">Packages</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-light" href="#how-it-works">How it works</a>
+          </li>
+          <li class="nav-item ms-lg-3 mt-3 mt-lg-0">
+            <a class="btn btn-sm btn-primary-custom" href="#contact">Get my plan</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero" id="hero">
+    <div class="hero-bg-glow"></div>
+    <div class="container">
+      <div class="row align-items-center g-5">
+        <div class="col-lg-6">
+          <div class="hero-badge mb-3">
+            <span>●</span>
+            <div>AI‑driven energy automation for modern homes</div>
+          </div>
+          <h1 class="hero-title mb-3">
+            Cut your power bill with <span>AethelonAI smart AC, heater & geyser control</span>.
+          </h1>
+          <p class="hero-subtitle mb-4">
+            AethelonAI layers intelligent automation on top of Google Home and Aqara to keep your home comfortable while using less electricity – without replacing your existing devices.
+          </p>
+          <div class="d-flex flex-wrap gap-3 mb-4">
+            <a href="#contact" class="btn btn-primary-custom">
+              Book a free home assessment
+            </a>
+            <a href="#packages" class="btn btn-outline-custom">
+              View packages
+            </a>
+          </div>
+          <div class="hero-highlight">
+            <div class="item">
+              <div class="dot"></div>
+              <span>Optimized AC, heater and geyser schedules</span>
+            </div>
+            <div class="item">
+              <div class="dot"></div>
+              <span>Works with TP‑Link, Qubo, Philips, Aqara and more</span>
+            </div>
+            <div class="item">
+              <div class="dot"></div>
+              <span>One unified app experience for your smart home</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-5 offset-lg-1">
+          <div class="hero-card">
+            <div class="d-flex justify-content-between mb-3">
+              <div>
+                <div class="hero-tag mb-1">Today’s usage</div>
+                <div class="hero-metric" id="hero-usage">8.4 kWh</div>
+                <div class="text-success small">Estimated savings: 18% vs typical</div>
+              </div>
+              <div class="text-end">
+                <div class="hero-tag mb-1">Home comfort</div>
+                <div class="badge-soft">
+                  AC 24°C • Heater eco
+                </div>
+              </div>
+            </div>
+
+            <div class="hero-mini-chart mb-3"></div>
+
+            <div class="row g-3">
+              <div class="col-4">
+                <div class="small text-uppercase text-muted">AC Saver</div>
+                <div class="fw-semibold">Enabled</div>
+              </div>
+              <div class="col-4">
+                <div class="small text-uppercase text-muted">Geyser Saver</div>
+                <div class="fw-semibold">Scheduled</div>
+              </div>
+              <div class="col-4">
+                <div class="small text-uppercase text-muted">Heater Saver</div>
+                <div class="fw-semibold">Auto</div>
+              </div>
+            </div>
+
+            <hr class="border-secondary-subtle my-3" />
+
+            <div class="d-flex justify-content-between align-items-center">
+              <div>
+                <div class="small text-muted">This month (est.)</div>
+                <div class="fw-semibold">₹ 2,150</div>
+                <div class="small text-success">↓ ~₹ 480 vs baseline</div>
+              </div>
+              <button class="btn btn-sm btn-outline-custom" onclick="scrollToContact()">
+                Get a similar setup
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- What we do -->
+  <section class="section" id="what-we-do">
+    <div class="container">
+      <div class="row mb-4 align-items-end">
+        <div class="col-md-7">
+          <h2 class="section-title">What we do</h2>
+          <p class="section-subtitle">
+            AethelonAI turns your existing smart devices into an AI‑assisted energy system that keeps your rooms comfortable and your electricity spend in check.
+          </p>
+        </div>
+      </div>
+
+      <div class="row g-4">
+        <div class="col-md-4">
+          <div class="card-soft p-4 h-100">
+            <div class="badge-soft mb-2">AC & heater intelligence</div>
+            <h5 class="mb-3">Comfort with less energy</h5>
+            <ul class="list-check">
+              <li>
+                <span>✓</span>
+                <div>Temperature‑aware AC and heater control tuned for efficiency, not over‑cooling or over‑heating.</div>
+              </li>
+              <li>
+                <span>✓</span>
+                <div>Smart schedules that match when you are actually home and active.</div>
+              </li>
+              <li>
+                <span>✓</span>
+                <div>Uses motion and presence to avoid conditioning empty rooms.</div>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="card-soft p-4 h-100">
+            <div class="badge-soft mb-2">Geyser protection</div>
+            <h5 class="mb-3">Hot water, no long‑running geysers</h5>
+            <ul class="list-check">
+              <li>
+                <span>✓</span>
+                <div>Auto‑off logic so geysers are never left on for hours by mistake.</div>
+              </li>
+              <li>
+                <span>✓</span>
+                <div>Morning and evening heating slots tied to your usage patterns.</div>
+              </li>
+              <li>
+                <span>✓</span>
+                <div>Energy‑aware control via smart plugs, timers and sensors.</div>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="card-soft p-4 h-100">
+            <div class="badge-soft mb-2">Multi‑brand, one app</div>
+            <h5 class="mb-3">Built on platforms you trust</h5>
+            <ul class="list-check">
+              <li>
+                <span>✓</span>
+                <div>Works on top of Google Home and Aqara smart home platforms.</div>
+              </li>
+              <li>
+                <span>✓</span>
+                <div>Plays nicely with TP‑Link, Qubo, Philips, Aqara and other compatible brands.</div>
+              </li>
+              <li>
+                <span>✓</span>
+                <div>AethelonAI becomes your single control and insights layer for energy automation.</div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Packages -->
+  <section class="section" id="packages">
+    <div class="container">
+      <div class="row mb-4 align-items-end">
+        <div class="col-md-7">
+          <h2 class="section-title">Packages</h2>
+          <p class="section-subtitle">
+            Pick a starting point, and we tailor the actual setup to your flat, devices and comfort preferences. All packages are custom‑quoted.
+          </p>
+        </div>
+      </div>
+
+      <div class="row g-4">
+        <!-- Starter -->
+        <div class="col-md-4">
+          <div class="card-soft pricing-card p-4 h-100">
+            <h6 class="text-uppercase text-muted small mb-1">Starter</h6>
+            <h4 class="mb-1">For 1–2 BHK</h4>
+            <p class="text-muted small mb-3">Perfect for your first step into smart energy automation.</p>
+            <p class="pricing-price text-muted mb-3">Custom quote</p>
+            <ul class="list-check mb-4">
+              <li>
+                <span>✓</span>
+                <div>AC + geyser automation in one primary room.</div>
+              </li>
+              <li>
+                <span>✓</span>
+                <div>Setup of 2–3 smart plugs and core Google Home routines.</div>
+              </li>
+              <li>
+                <span>✓</span>
+                <div>Simple AethelonAI app view for usage and key alerts.</div>
+              </li>
+            </ul>
+            <button class="btn btn-outline-custom w-100" onclick="scrollToContact('Starter')">
+              Request Starter package
+            </button>
+          </div>
+        </div>
+
+        <!-- Comfort -->
+        <div class="col-md-4">
+          <div class="card-soft pricing-card highlight p-4 h-100">
+            <div class="pricing-pill">Most chosen</div>
+            <h6 class="text-uppercase text-muted small mb-1">Comfort</h6>
+            <h4 class="mb-1">For bigger setups</h4>
+            <p class="text-muted small mb-3">Designed for larger homes or multiple high‑usage rooms.</p>
+            <p class="pricing-price text-muted mb-3">Custom quote</p>
+            <ul class="list-check mb-4">
+              <li>
+                <span>✓</span>
+                <div>AC + heater + geyser automation across 2–3 rooms.</div>
+              </li>
+              <li>
+                <span>✓</span>
+                <div>Advanced presence‑based rules and seasonal profiles (summer / winter / monsoon).</div>
+              </li>
+              <li>
+                <span>✓</span>
+                <div>Energy summaries and usage trends inside the AethelonAI app.</div>
+              </li>
+            </ul>
+            <button class="btn btn-primary-custom w-100" onclick="scrollToContact('Comfort')">
+              Book Comfort consultation
+            </button>
+          </div>
+        </div>
+
+        <!-- Premium -->
+        <div class="col-md-4">
+          <div class="card-soft pricing-card p-4 h-100">
+            <h6 class="text-uppercase text-muted small mb-1">Premium (Aqara)</h6>
+            <h4 class="mb-1">For premium homes</h4>
+            <p class="text-muted small mb-3">Ideal for new or high‑end installations with Aqara at the core.</p>
+            <p class="pricing-price text-muted mb-3">Custom quote</p>
+            <ul class="list-check mb-4">
+              <li>
+                <span>✓</span>
+                <div>Full Aqara‑based multi‑room scenes and deep sensor integrations.</div>
+              </li>
+              <li>
+                <span>✓</span>
+                <div>Detailed analytics for AC, heater and geyser usage with savings estimates.</div>
+              </li>
+              <li>
+                <span>✓</span>
+                <div>Priority onboarding, support and continuous optimisation from AethelonAI.</div>
+              </li>
+            </ul>
+            <button class="btn btn-outline-custom w-100" onclick="scrollToContact('Premium (Aqara)')">
+              Talk to an expert
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How it works -->
+  <section class="section" id="how-it-works">
+    <div class="container">
+      <div class="row mb-4 align-items-end">
+        <div class="col-md-7">
+          <h2 class="section-title">How AethelonAI works</h2>
+          <p class="section-subtitle">
+            A simple three‑step journey that turns your existing ACs, heaters, geysers and sensors into an AI‑assisted energy‑saving setup.
+          </p>
+        </div>
+      </div>
+
+      <div class="row g-4">
+        <div class="col-md-4">
+          <div class="card-soft p-4 h-100">
+            <div class="badge-soft mb-2">Step 1</div>
+            <h5 class="mb-2">Home & device review</h5>
+            <p class="text-muted small mb-0">
+              We map your rooms, ACs, heaters, geysers and smart plugs, plus understand your typical routine and electricity costs.
+            </p>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="card-soft p-4 h-100">
+            <div class="badge-soft mb-2">Step 2</div>
+            <h5 class="mb-2">Automation design & setup</h5>
+            <p class="text-muted small mb-0">
+              We configure Google Home and Aqara automations, connect sensors, and deploy tested AethelonAI recipes for AC, heater and geyser savings.
+            </p>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="card-soft p-4 h-100">
+            <div class="badge-soft mb-2">Step 3</div>
+            <h5 class="mb-2">Monitor & refine in the app</h5>
+            <p class="text-muted small mb-0">
+              You see usage and savings inside the AethelonAI app while we fine‑tune schedules, temperature bands and rules to match your comfort.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section class="section pb-5" id="contact">
+    <div class="container">
+      <div class="row mb-4 align-items-end">
+        <div class="col-md-7">
+          <h2 class="section-title">Get started with AethelonAI</h2>
+          <p class="section-subtitle">
+            Tell us a bit about your home and devices. We’ll respond with a suggested package, an estimated savings range and a clear next step.
+          </p>
+        </div>
+      </div>
+
+      <div class="row g-4">
+        <div class="col-lg-7">
+          <div class="card-soft contact-card p-4">
+            <form onsubmit="handleFormSubmit(event)">
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label class="form-label small text-muted">Name</label>
+                  <input type="text" class="form-control form-control-sm" required />
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label small text-muted">Email</label>
+                  <input type="email" class="form-control form-control-sm" required />
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label small text-muted">Phone</label>
+                  <input type="tel" class="form-control form-control-sm" />
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label small text-muted">City</label>
+                  <input type="text" class="form-control form-control-sm" />
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label small text-muted">Home size (BHK)</label>
+                  <select class="form-select form-select-sm">
+                    <option>1 BHK</option>
+                    <option>2 BHK</option>
+                    <option>3 BHK</option>
+                    <option>4+ BHK</option>
+                  </select>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label small text-muted">Current monthly bill (approx)</label>
+                  <input type="text" class="form-control form-control-sm" placeholder="e.g. ₹2500" />
+                </div>
+                <div class="col-12">
+                  <label class="form-label small text-muted">Preferred package</label>
+                  <select class="form-select form-select-sm" id="preferredPackage">
+                    <option value="">Not sure yet</option>
+                    <option value="Starter">Starter</option>
+                    <option value="Comfort">Comfort</option>
+                    <option value="Premium (Aqara)">Premium (Aqara)</option>
+                  </select>
+                </div>
+                <div class="col-12">
+                  <label class="form-label small text-muted">Anything else we should know?</label>
+                  <textarea class="form-control form-control-sm" rows="3" placeholder="Number of ACs, heaters, geysers, smart plugs, any special requirements, etc."></textarea>
+                </div>
+              </div>
+              <div class="d-flex align-items-center gap-3 mt-4">
+                <button type="submit" class="btn btn-primary-custom">
+                  Get my AethelonAI plan
+                </button>
+                <div class="small text-muted" id="formStatus"></div>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <div class="col-lg-5">
+          <div class="card-soft p-4 h-100">
+            <h5 class="mb-3">What you’ll receive</h5>
+            <ul class="list-check mb-3">
+              <li>
+                <span>✓</span>
+                <div>A recommended AethelonAI package aligned to your home and devices.</div>
+              </li>
+              <li>
+                <span>✓</span>
+                <div>A high‑level projected savings band for AC, heater and geyser usage.</div>
+              </li>
+              <li>
+                <span>✓</span>
+                <div>A simple overview of the automations we’ll configure on Google Home and Aqara for you.</div>
+              </li>
+            </ul>
+            <p class="text-muted small mb-0">
+              We usually reply within one business day with a proposal and a slot for a quick discovery call.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="py-3 mt-3">
+    <div class="container d-flex flex-column flex-md-row justify-content-between align-items-center gap-2">
+      <div class="small">
+        © <span id="year"></span> AethelonAI. All rights reserved.
+      </div>
+      <div class="small">
+        Built on top of Google Home and Aqara to power intelligent home energy automation.
+      </div>
+    </div>
+  </footer>
+
+  <!-- Bootstrap JS + Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    function scrollToContact(packageName) {
+      const contactSection = document.getElementById("contact");
+      if (packageName) {
+        const select = document.getElementById("preferredPackage");
+        if (select) select.value = packageName;
+      }
+      contactSection.scrollIntoView({ behavior: "smooth" });
+    }
+
+    function handleFormSubmit(e) {
+      e.preventDefault();
+      const statusEl = document.getElementById("formStatus");
+      statusEl.textContent = "Thank you. The AethelonAI team will reach out soon.";
+      setTimeout(() => {
+        statusEl.textContent = "";
+      }, 4000);
+      e.target.reset();
+    }
+  </script>
+</body>
+</html>
