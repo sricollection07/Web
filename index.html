@@ -2,10 +2,30 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>aethelon.ai | Making homes smarter, energy-efficient, and sustainable.</title>
+  <title>aethelonai | Making homes smarter, energy-efficient, and sustainable.</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
     :root {
+      /* Light theme (default - white background) */
+      --bg: #fafbfc;
+      --bg-alt: #ffffff;
+      --accent: #15803d;
+      --accent-soft: rgba(34, 197, 94, 0.1);
+      --accent-strong: #166534;
+      --accent-warn: #ea580c;
+      --text: #0a0e27;
+      --muted: #64748b;
+      --border: #d1d5db;
+      --card: #ffffff;
+      --danger: #dc2626;
+      --shadow: 0 8px 24px rgba(15, 23, 42, 0.12);
+      --radius-lg: 20px;
+      --radius-md: 12px;
+      --radius-sm: 999px;
+    }
+
+    /* Dark theme */
+    body.dark-theme {
       --bg: #05070b;
       --bg-alt: #0b1014;
       --accent: #19e68c;
@@ -18,25 +38,6 @@
       --card: #0c111b;
       --danger: #ff5c5c;
       --shadow: 0 18px 40px rgba(0,0,0,0.55);
-      --radius-lg: 20px;
-      --radius-md: 12px;
-      --radius-sm: 999px;
-    }
-
-    /* Light theme tokens */
-    body.light-theme {
-      --bg: #f9fafb;
-      --bg-alt: #ffffff;
-      --accent: #16a34a;
-      --accent-soft: rgba(34, 197, 94, 0.12);
-      --accent-strong: #15803d;
-      --accent-warn: #f97316;
-      --text: #0f172a;
-      --muted: #6b7280;
-      --border: #e5e7eb;
-      --card: #ffffff;
-      --danger: #dc2626;
-      --shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
     }
 
     * {
@@ -48,13 +49,13 @@
     }
 
     body {
-      background: radial-gradient(circle at top left, #111827 0, #020308 50%, #020308 100%);
+      background: var(--bg);
       color: var(--text);
       line-height: 1.7;
     }
 
-    body.light-theme {
-      background: var(--bg);
+    body.dark-theme {
+      background: radial-gradient(circle at top left, #111827 0, #020308 50%, #020308 100%);
     }
 
     a {
@@ -90,8 +91,9 @@
     }
 
     body.light-theme .navbar {
-      background: rgba(255,255,255,0.9);
-      border-bottom-color: rgba(148,163,184,0.25);
+      background: rgba(255,255,255,0.95);
+      border-bottom: 1.5px solid #e2e8f0;
+      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.08);
     }
 
     .nav-inner {
@@ -217,15 +219,15 @@
       color: #020617;
     }
 
-    body.light-theme .theme-toggle {
-      background: var(--accent-soft);
+    body.dark-theme .theme-toggle {
+      background: rgba(25, 230, 140, 0.2);
       border-color: var(--accent);
     }
 
-    body.light-theme .theme-toggle-dot {
+    body.dark-theme .theme-toggle-dot {
       left: 22px;
-      background: #ffffff;
-      color: var(--accent-strong);
+      background: #0c111b;
+      color: var(--accent);
     }
 
     .btn {
@@ -279,13 +281,15 @@
     }
 
     body.light-theme .btn-accent {
-      background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+      background: linear-gradient(135deg, #15803d 0%, #166534 100%);
       color: #ffffff;
-      box-shadow: 0 8px 24px rgba(34, 197, 94, 0.3);
+      box-shadow: 0 6px 20px rgba(21, 128, 61, 0.35);
+      font-weight: 600;
     }
 
     body.light-theme .btn-accent:hover {
-      box-shadow: 0 12px 32px rgba(34, 197, 94, 0.4);
+      box-shadow: 0 10px 28px rgba(21, 128, 61, 0.45);
+      transform: translateY(-2px);
     }
 
     /* HERO */
@@ -368,6 +372,12 @@
 
     .hero-title span {
       background: linear-gradient(90deg, #bbf7d0, #4ade80);
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    body.light-theme .hero-title span {
+      background: linear-gradient(90deg, #15803d 0%, #166534 100%);
       -webkit-background-clip: text;
       color: transparent;
     }
@@ -800,8 +810,8 @@
     body.light-theme .contact-info-card,
     body.light-theme .newsletter {
       background: #ffffff;
-      border-color: #e5e7eb;
-      box-shadow: 0 10px 30px rgba(15,23,42,0.06);
+      border-color: #cbd5e1;
+      box-shadow: 0 4px 16px rgba(15, 23, 42, 0.1);
     }
 
     .card {
@@ -1381,7 +1391,7 @@
         <div class="logo">
           <div class="logo-mark"></div>
           <div>
-            <div>aethelon.ai</div>
+            <div>aethelonai</div>
             <div style="font-size:8px; letter-spacing:0.18em; text-transform:uppercase; color:#6b7280;">
               Make Homes smarter, energy-efficient
             </div>
@@ -1824,7 +1834,7 @@
             <div class="contact-item">
               <div class="contact-item-label">Email</div>
               <div class="contact-item-value">
-                <a href="mailto:hello@aethelon.ai">hello@aethelon.ai</a>
+                <a href="mailto:hello@aethelonai">hello@aethelonai</a>
               </div>
             </div>
             <div class="contact-item">
@@ -1871,7 +1881,7 @@
   <!-- FOOTER -->
   <footer>
     <div class="container footer-grid">
-      <div>© <span id="year"></span> aethelon.ai · Smart, energy‑aware homes</div>
+      <div>© <span id="year"></span> aethelonai · Smart, energy‑aware homes</div>
       <div class="footer-links">
         <a href="#packages">Packages</a>
         <a href="#roi">ROI</a>
@@ -1889,25 +1899,23 @@
     const themeIcon = document.getElementById("themeIcon");
 
     function setTheme(theme) {
-      if (theme === "light") {
-        document.body.classList.add("light-theme");
-        themeIcon.textContent = "🌙";
-      } else {
-        document.body.classList.remove("light-theme");
+      if (theme === "dark") {
+        document.body.classList.add("dark-theme");
         themeIcon.textContent = "☀️";
+      } else {
+        document.body.classList.remove("dark-theme");
+        themeIcon.textContent = "🌙";
       }
       localStorage.setItem("theme", theme);
     }
 
     themeToggle.addEventListener("click", () => {
-      const current = document.body.classList.contains("light-theme") ? "light" : "dark";
-      setTheme(current === "light" ? "dark" : "light");
+      const current = document.body.classList.contains("dark-theme") ? "dark" : "light";
+      setTheme(current === "dark" ? "light" : "dark");
     });
 
-    const savedTheme = localStorage.getItem("theme");
-    if (savedTheme) {
-      setTheme(savedTheme);
-    }
+    const savedTheme = localStorage.getItem("theme") || "light";
+    setTheme(savedTheme);
 
     function joinQueue() {
       const queueCountEl = document.getElementById("queueCount");
