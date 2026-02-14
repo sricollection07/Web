@@ -2,800 +2,1926 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <title>aethelon.ai | Making homes smarter, energy-efficient, and sustainable.</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>AethelonAI • Smart Energy Home Automation Powered by AI</title>
-
-  <!-- Bootstrap CSS -->
-  <link
-    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
-    rel="stylesheet"
-  />
-
-  <!-- Google Font -->
-  <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
-    rel="stylesheet"
-  />
-
   <style>
     :root {
-      --primary: #2563eb;
-      --primary-soft: #dbeafe;
-      --accent: #22c55e;
-      --dark: #0f172a;
-      --muted: #64748b;
+      --bg: #05070b;
+      --bg-alt: #0b1014;
+      --accent: #19e68c;
+      --accent-soft: rgba(25, 230, 140, 0.14);
+      --accent-strong: #14c473;
+      --accent-warn: #ffb347;
+      --text: #f5f7fb;
+      --muted: #9aa4c2;
+      --border: #151b26;
+      --card: #0c111b;
+      --danger: #ff5c5c;
+      --shadow: 0 18px 40px rgba(0,0,0,0.55);
+      --radius-lg: 20px;
+      --radius-md: 12px;
+      --radius-sm: 999px;
+    }
+
+    /* Light theme tokens */
+    body.light-theme {
+      --bg: #f9fafb;
+      --bg-alt: #ffffff;
+      --accent: #16a34a;
+      --accent-soft: rgba(34, 197, 94, 0.12);
+      --accent-strong: #15803d;
+      --accent-warn: #f97316;
+      --text: #0f172a;
+      --muted: #6b7280;
+      --border: #e5e7eb;
+      --card: #ffffff;
+      --danger: #dc2626;
+      --shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
     }
 
     * {
-      font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
+        "Segoe UI", sans-serif;
     }
 
     body {
-      background-color: #020617;
-      color: #e5e7eb;
+      background: radial-gradient(circle at top left, #111827 0, #020308 50%, #020308 100%);
+      color: var(--text);
+      line-height: 1.7;
     }
 
+    body.light-theme {
+      background: var(--bg);
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* NAVBAR */
     .navbar {
-      background: rgba(15, 23, 42, 0.9);
-      backdrop-filter: blur(14px);
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(16px);
+      background: linear-gradient(
+        to bottom,
+        rgba(5,7,11,0.95),
+        rgba(5,7,11,0.8),
+        rgba(5,7,11,0.2)
+      );
+      border-bottom: 1px solid rgba(148,163,184,0.15);
     }
 
-    .navbar-brand span {
-      color: var(--primary);
-      font-weight: 700;
+    body.light-theme .navbar {
+      background: rgba(255,255,255,0.9);
+      border-bottom-color: rgba(148,163,184,0.25);
     }
 
-    .hero {
-      min-height: 90vh;
+    .nav-inner {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding: 12px 0;
+    }
+
+    .nav-top {
       display: flex;
       align-items: center;
-      position: relative;
-      overflow: hidden;
-      padding-top: 5rem;
-      padding-bottom: 5rem;
+      justify-content: space-between;
+      padding: 0 20px;
+      gap: 16px;
     }
 
-    .hero-bg-glow {
-      position: absolute;
-      inset: -20%;
-      background:
-        radial-gradient(circle at top left, rgba(56, 189, 248, 0.18), transparent 55%),
-        radial-gradient(circle at bottom right, rgba(34, 197, 94, 0.2), transparent 50%);
-      opacity: 0.9;
-      pointer-events: none;
-      z-index: -1;
-    }
-
-    .hero-badge {
-      display: inline-flex;
+    .nav-bottom {
+      display: flex;
       align-items: center;
-      gap: 0.5rem;
-      padding: 0.25rem 0.75rem;
-      border-radius: 999px;
-      background: rgba(15, 23, 42, 0.85);
-      border: 1px solid rgba(148, 163, 184, 0.6);
-      font-size: 0.8rem;
+      justify-content: flex-end;
+      padding: 0 20px;
+      gap: 8px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-size: 13px;
       color: var(--muted);
     }
 
-    .hero-badge span {
+    .logo-mark {
+      width: 28px;
+      height: 28px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 20%, #38f9a5, #16a34a 48%, #020617 80%);
+      box-shadow: 0 0 20px rgba(34,197,94,0.7);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .logo-mark::after {
+      content: "";
+      position: absolute;
+      inset: 7px;
+      border-radius: inherit;
+      border: 2px solid rgba(15,23,42,0.6);
+      box-shadow: inset 0 0 16px rgba(15,23,42,0.85);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      font-size: 13px;
+      color: var(--muted);
+      flex: 1;
+      justify-content: center;
+    }
+
+    .nav-links a {
+      padding: 6px 0;
+      position: relative;
+    }
+
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -3px;
+      width: 0;
+      height: 1px;
+      background: linear-gradient(90deg, var(--accent), #4ade80);
+      transition: width 0.2s ease;
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    .nav-cta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Theme Toggle */
+    .theme-toggle {
+      width: 48px;
+      height: 28px;
+      border-radius: 999px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      cursor: pointer;
+      position: relative;
+      transition: background 0.3s ease;
+      display: flex;
+      align-items: center;
+      padding: 2px;
+    }
+
+    .theme-toggle:hover {
+      background: var(--accent-soft);
+    }
+
+    .theme-toggle-dot {
+      width: 24px;
+      height: 24px;
+      border-radius: 999px;
+      background: var(--text);
+      position: absolute;
+      left: 2px;
+      transition: left 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      color: #020617;
+    }
+
+    body.light-theme .theme-toggle {
+      background: var(--accent-soft);
+      border-color: var(--accent);
+    }
+
+    body.light-theme .theme-toggle-dot {
+      left: 22px;
+      background: #ffffff;
+      color: var(--accent-strong);
+    }
+
+    .btn {
+      border-radius: 8px;
+      padding: 12px 24px;
+      font-size: 14px;
+      font-weight: 500;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      width: 18px;
-      height: 18px;
+      gap: 8px;
+      white-space: nowrap;
+      letter-spacing: 0.3px;
+    }
+
+    .btn-ghost {
+      background: rgba(148, 163, 184, 0.08);
+      border: 1.5px solid var(--border);
+      color: var(--muted);
+    }
+
+    .btn-ghost:hover {
+      background: rgba(148, 163, 184, 0.15);
+      border-color: var(--accent);
+      color: var(--accent);
+      box-shadow: 0 8px 16px rgba(25, 230, 140, 0.1);
+    }
+
+    .btn-ghost:active {
+      transform: scale(0.98);
+    }
+
+    .btn-accent {
+      background: linear-gradient(135deg, #19e68c 0%, #14c473 100%);
+      color: #020308;
+      font-weight: 600;
+      box-shadow: 0 8px 24px rgba(25, 230, 140, 0.3);
+      border: none;
+    }
+
+    .btn-accent:hover {
+      box-shadow: 0 12px 32px rgba(25, 230, 140, 0.4);
+      transform: translateY(-2px);
+    }
+
+    .btn-accent:active {
+      transform: translateY(0);
+    }
+
+    body.light-theme .btn-accent {
+      background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+      color: #ffffff;
+      box-shadow: 0 8px 24px rgba(34, 197, 94, 0.3);
+    }
+
+    body.light-theme .btn-accent:hover {
+      box-shadow: 0 12px 32px rgba(34, 197, 94, 0.4);
+    }
+
+    /* HERO */
+    .hero {
+      padding: 72px 0 40px;
+    }
+
+    @media(min-width: 960px) {
+      .hero {
+        padding: 96px 0 56px;
+      }
+    }
+
+    body.light-theme .hero {
+      background: radial-gradient(circle at top left, #eff6ff 0, #ffffff 55%, #f9fafb 100%);
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+      gap: 32px;
+      align-items: center;
+    }
+
+    @media(max-width: 900px) {
+      .hero-grid {
+        grid-template-columns: minmax(0,1fr);
+        padding-top: 16px;
+      }
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 11px 4px 4px;
+      border-radius: var(--radius-sm);
+      border: 1px solid rgba(148,163,184,0.35);
+      background: radial-gradient(circle at 0 0, rgba(74,222,128,0.2), rgba(15,23,42,0.2));
+      color: var(--muted);
+      font-size: 11px;
+      margin-bottom: 16px;
+    }
+
+    body.light-theme .pill {
+      background: rgba(220,252,231,0.9);
+      border-color: rgba(187,247,208,1);
+      color: #166534;
+    }
+
+    .pill-badge {
+      padding: 3px 8px;
+      border-radius: var(--radius-sm);
+      font-size: 10px;
+      background: rgba(22,163,74,0.18);
+      color: var(--accent);
+      border: 1px solid rgba(22,163,74,0.6);
+    }
+
+    body.light-theme .pill-badge {
+      background: #16a34a;
+      color: #f0fdf4;
+      border-color: #16a34a;
+    }
+
+    .pill-dot {
+      width: 8px;
+      height: 8px;
       border-radius: 999px;
-      background: var(--primary-soft);
-      color: #1d4ed8;
-      font-size: 0.7rem;
-      font-weight: 700;
+      background: #22c55e;
+      box-shadow: 0 0 10px rgba(34,197,94,0.9);
     }
 
     .hero-title {
-      font-size: clamp(2.2rem, 3vw + 1rem, 3.2rem);
-      font-weight: 700;
+      font-size: clamp(2.3rem, 4vw, 3.1rem);
+      font-weight: 650;
       letter-spacing: -0.03em;
+      margin-bottom: 16px;
     }
 
     .hero-title span {
-      background: linear-gradient(to right, #38bdf8, #22c55e);
+      background: linear-gradient(90deg, #bbf7d0, #4ade80);
       -webkit-background-clip: text;
       color: transparent;
     }
 
     .hero-subtitle {
+      max-width: 520px;
+      font-size: 15px;
       color: var(--muted);
-      max-width: 34rem;
+      margin-bottom: 22px;
     }
 
-    .btn-primary-custom {
-      background: linear-gradient(135deg, #2563eb, #1d4ed8);
-      border: none;
-      border-radius: 999px;
-      padding-inline: 1.7rem;
-      padding-block: 0.7rem;
-      font-weight: 500;
-      box-shadow: 0 10px 25px rgba(37, 99, 235, 0.45);
-    }
-
-    .btn-outline-custom {
-      border-radius: 999px;
-      border-color: rgba(148, 163, 184, 0.9);
-      color: #e5e7eb;
-      padding-inline: 1.5rem;
-      padding-block: 0.7rem;
-    }
-
-    .btn-outline-custom:hover {
-      background-color: rgba(15, 23, 42, 0.9);
-      color: #e5e7eb;
-    }
-
-    .hero-highlight {
+    .hero-metrics {
       display: flex;
       flex-wrap: wrap;
-      gap: 1.25rem;
-      font-size: 0.9rem;
+      gap: 16px;
+      margin: 20px 0 26px;
+    }
+
+    .metric {
+      padding: 10px 16px;
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(148,163,184,0.32);
+      background: rgba(15,23,42,0.7);
+      min-width: 140px;
+    }
+
+    .metric-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
       color: var(--muted);
     }
 
-    .hero-highlight .item {
+    .metric-value {
+      font-size: 18px;
+      margin-top: 2px;
+    }
+
+    .metric-value span {
+      font-size: 11px;
+      color: var(--muted);
+      font-weight: 500;
+      margin-left: 4px;
+    }
+
+    body.light-theme .metric {
+      background: #ffffff;
+      border-color: #e5e7eb;
+    }
+
+    .hero-actions {
       display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
       align-items: center;
-      gap: 0.4rem;
     }
 
-    .hero-highlight .dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 999px;
-      background: linear-gradient(to right, #22c55e, #38bdf8);
+    .hero-actions .btn.btn-accent {
+      padding: 12px 26px;
+      font-size: 14px;
     }
 
-    .hero-card {
-      background: radial-gradient(circle at top, rgba(15, 23, 42, 0.95), rgba(15, 23, 42, 0.98));
-      border-radius: 1.5rem;
-      border: 1px solid rgba(148, 163, 184, 0.5);
-      box-shadow: 0 20px 60px rgba(15, 23, 42, 0.8);
-      padding: 1.5rem;
+    .hero-actions .btn.btn-ghost {
+      padding: 10px 18px;
+      font-size: 12px;
+      opacity: 0.9;
     }
 
-    .hero-tag {
-      font-size: 0.8rem;
+    .hero-note {
+      font-size: 11px;
       color: var(--muted);
+      margin-top: 6px;
     }
 
-    .hero-metric {
-      font-size: 2.1rem;
-      font-weight: 600;
+    .hero-note strong {
+      color: var(--accent);
+      font-weight: 500;
     }
 
-    .hero-mini-chart {
-      height: 70px;
-      border-radius: 0.75rem;
-      background: linear-gradient(135deg, rgba(34, 197, 94, 0.12), rgba(56, 189, 248, 0.1));
+    .hero-badges-row {
+      display: flex;
+      gap: 10px;
+      margin-top: 12px;
+      font-size: 10px;
+      color: var(--muted);
+      flex-wrap: wrap;
+    }
+
+    .hero-badge {
+      padding: 4px 8px;
+      border-radius: var(--radius-sm);
+      border: 1px solid rgba(148,163,184,0.35);
+      background: rgba(15,23,42,0.7);
+      font-size: 11px;
+    }
+
+    body.light-theme .hero-badge {
+      background: #f3f4f6;
+      border-color: #e5e7eb;
+      color: #4b5563;
+    }
+
+    /* HERO Right Panel */
+    .hero-panel {
+      border-radius: 24px;
+      background: radial-gradient(circle at top, #0b1220 0, #020617 55%, #020617 100%);
+      border: 1px solid rgba(148,163,184,0.28);
+      box-shadow: var(--shadow);
+      padding: 18px 18px 16px;
       position: relative;
       overflow: hidden;
     }
 
-    .hero-mini-chart::before {
-      content: "";
-      position: absolute;
-      inset: 18px 12px;
-      border-radius: 999px;
-      border: 1px dashed rgba(148, 163, 184, 0.5);
+    body.light-theme .hero-panel {
+      background: #ffffff;
+      border-color: #e5e7eb;
+      box-shadow: 0 10px 30px rgba(15,23,42,0.08);
     }
 
-    .hero-mini-chart::after {
-      content: "";
-      position: absolute;
-      inset: 24px 22px 30px 22px;
-      border-radius: 999px;
-      background: linear-gradient(to right, #22c55e, #38bdf8);
+    .hero-panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      font-size: 11px;
+      color: var(--muted);
     }
 
-    .section {
-      padding-block: 4rem;
+    .hero-panel-header span {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .hero-panel-header span small {
+      padding: 3px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.4);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .queue-count {
+      font-size: 12px;
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .queue-count-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: #22c55e;
+      box-shadow: 0 0 12px rgba(34,197,94,0.9);
+    }
+
+    .queue-number {
+      font-weight: 600;
+    }
+
+    .queue-badge {
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 10px;
+      background: rgba(55,65,81,0.7);
+      color: var(--muted);
+    }
+
+    body.light-theme .queue-badge {
+      background: #e5e7eb;
+      color: #4b5563;
+    }
+
+    .queue-bar {
+      width: 100%;
+      background: rgba(15,23,42,0.9);
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.45);
+      padding: 4px;
+      margin-bottom: 10px;
+    }
+
+    body.light-theme .queue-bar {
+      background: #f3f4f6;
+      border-color: #d1d5db;
+    }
+
+    .queue-bar-inner {
+      height: 12px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #22c55e, #4ade80, #a3e635);
+      width: 34%;
+      position: relative;
+      box-shadow: 0 0 12px rgba(34,197,94,0.6);
+    }
+
+    .queue-bar-inner::after {
+      content: "Early adopters";
+      position: absolute;
+      right: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 9px;
+      color: #052e16;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .coupon-banner {
+      padding: 10px 12px;
+      border-radius: var(--radius-sm);
+      border: 1px solid rgba(34,197,94,0.55);
+      background: rgba(22,101,52,0.38);
+      margin-bottom: 12px;
+      font-size: 11px;
+      color: #bbf7d0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    body.light-theme .coupon-banner {
+      background: #dcfce7;
+      color: #166534;
+      border-color: #4ade80;
+    }
+
+    .coupon-code {
+      font-family: "SF Mono", Menlo, Monaco, Consolas, monospace;
+      font-size: 12px;
+      padding: 4px 8px;
+      border-radius: 6px;
+      background: rgba(15,23,42,0.9);
+      border: 1px dashed rgba(74,222,128,0.7);
+      color: #a7f3d0;
+    }
+
+    body.light-theme .coupon-code {
+      background: #16a34a;
+      color: #ecfdf5;
+      border-color: rgba(22,163,74,0.9);
+    }
+
+    .coupon-tagline {
+      font-size: 10px;
+      color: var(--muted);
+    }
+
+    .queue-form {
+      background: rgba(15,23,42,0.9);
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(148,163,184,0.4);
+      padding: 12px 12px 12px;
+    }
+
+    body.light-theme .queue-form {
+      background: #ffffff;
+      border-color: #e5e7eb;
+    }
+
+    .queue-form h4 {
+      font-size: 13px;
+      margin-bottom: 4px;
+    }
+
+    .queue-form p {
+      font-size: 11px;
+      color: var(--muted);
+      margin-bottom: 10px;
+    }
+
+    .form-row {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .form-col {
+      flex: 1;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 10px;
+      margin-bottom: 3px;
+      color: var(--muted);
+    }
+
+    .input, select {
+      width: 100%;
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.6);
+      padding: 7px 10px;
+      font-size: 11px;
+      background: rgba(2,6,23,0.9);
+      color: var(--text);
+      outline: none;
+    }
+
+    .input::placeholder {
+      color: rgba(148,163,184,0.5);
+    }
+
+    .input:focus, select:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 1px rgba(34,197,94,0.35);
+    }
+
+    body.light-theme .input,
+    body.light-theme select {
+      background: #ffffff;
+      color: #0f172a;
+      border-color: #d1d5db;
+    }
+
+    body.light-theme .input::placeholder {
+      color: #9ca3af;
+    }
+
+    .queue-checkbox {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 10px;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    .queue-checkbox input {
+      width: 12px;
+      height: 12px;
+    }
+
+    .queue-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      margin-top: 6px;
+    }
+
+    .queue-eta {
+      font-size: 10px;
+      color: var(--muted);
+    }
+
+    .queue-eta strong {
+      color: #e5e7eb;
+    }
+
+    body.light-theme .queue-eta strong {
+      color: #111827;
+    }
+
+    /* Sections */
+    section {
+      padding: 40px 0;
+    }
+
+    @media(min-width: 960px) {
+      section {
+        padding: 64px 0;
+      }
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 28px;
+      gap: 12px;
     }
 
     .section-title {
+      font-size: 21px;
       font-weight: 600;
-      margin-bottom: 0.25rem;
+      letter-spacing: -0.02em;
+    }
+
+    .section-kicker {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
     }
 
     .section-subtitle {
+      font-size: 13px;
       color: var(--muted);
-      max-width: 32rem;
+      max-width: 520px;
+      line-height: 1.7;
     }
 
-    .card-soft {
-      border-radius: 1.25rem;
-      border: 1px solid rgba(148, 163, 184, 0.4);
-      background: radial-gradient(circle at top left, rgba(15, 23, 42, 0.96), rgba(15, 23, 42, 0.99));
-      height: 100%;
+    /* Packages */
+    .packages-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap: 16px;
     }
 
-    .badge-soft {
-      border-radius: 999px;
-      background-color: rgba(37, 99, 235, 0.08);
-      color: #bfdbfe;
-      font-size: 0.75rem;
-      padding: 0.25rem 0.75rem;
+    @media(max-width: 900px) {
+      .packages-grid {
+        grid-template-columns: minmax(0,1fr);
+      }
     }
 
-    .list-check {
-      list-style: none;
-      padding-left: 0;
-      margin-bottom: 0;
+    .card,
+    .roi-card,
+    .impact-card,
+    .patent-card,
+    .contact-form-card,
+    .contact-info-card,
+    .newsletter {
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(148,163,184,0.22);
+      box-shadow: 0 12px 28px rgba(0,0,0,0.45);
+      background: var(--card);
     }
 
-    .list-check li {
-      display: flex;
-      align-items: flex-start;
-      gap: 0.5rem;
-      margin-bottom: 0.45rem;
-      color: var(--muted);
-      font-size: 0.9rem;
+    body.light-theme .card,
+    body.light-theme .roi-card,
+    body.light-theme .impact-card,
+    body.light-theme .patent-card,
+    body.light-theme .contact-form-card,
+    body.light-theme .contact-info-card,
+    body.light-theme .newsletter {
+      background: #ffffff;
+      border-color: #e5e7eb;
+      box-shadow: 0 10px 30px rgba(15,23,42,0.06);
     }
 
-    .list-check span {
-      flex-shrink: 0;
-      width: 18px;
-      height: 18px;
-      border-radius: 999px;
-      background-color: rgba(34, 197, 94, 0.14);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.75rem;
-      color: #22c55e;
-    }
-
-    .pricing-card {
+    .card {
+      background: radial-gradient(circle at top left, rgba(15,23,42,0.92), rgba(9,12,20,0.98));
+      padding: 14px 14px 12px;
       position: relative;
       overflow: hidden;
     }
 
-    .pricing-card.highlight {
-      border-color: rgba(59, 130, 246, 0.9);
-      box-shadow: 0 18px 45px rgba(37, 99, 235, 0.45);
+    body.light-theme .card {
+      background: #ffffff;
     }
 
-    .pricing-pill {
-      position: absolute;
-      top: 16px;
-      right: 16px;
-      border-radius: 999px;
-      padding-inline: 0.75rem;
-      padding-block: 0.2rem;
-      background: linear-gradient(to right, #22c55e, #4ade80);
-      font-size: 0.7rem;
-      color: #022c22;
+    .card-highlight {
+      border-color: rgba(34,197,94,0.7);
+      box-shadow: 0 0 26px rgba(34,197,94,0.28);
+    }
+
+    body.light-theme .card-highlight {
+      border-color: #16a34a;
+      box-shadow: 0 0 26px rgba(74,222,128,0.35);
+    }
+
+    .card-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+
+    .card-title {
+      font-size: 16px;
       font-weight: 600;
+      margin-bottom: 6px;
     }
 
-    .pricing-price {
-      font-size: 1.4rem;
-      font-weight: 500;
+    .card-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 3px 8px;
+      border-radius: var(--radius-sm);
+      font-size: 10px;
+      border: 1px solid rgba(148,163,184,0.35);
+      color: var(--muted);
+      margin-bottom: 8px;
     }
 
-    .contact-card input,
-    .contact-card select,
-    .contact-card textarea {
-      background-color: #020617;
-      border-color: rgba(148, 163, 184, 0.6);
+    body.light-theme .card-pill,
+    body.light-theme .chip,
+    body.light-theme .package-tag {
+      background: #f3f4f6;
+      border-color: #e5e7eb;
+      color: #4b5563;
+    }
+
+    .card-price {
+      font-size: 22px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .card-price span {
+      font-size: 11px;
+      color: var(--muted);
+      margin-left: 4px;
+      font-weight: 400;
+    }
+
+    .card-note {
+      font-size: 11px;
+      color: var(--muted);
+      margin-bottom: 10px;
+    }
+
+    .card-list {
+      list-style: none;
+      font-size: 12px;
+      color: var(--muted);
+      margin: 10px 0 4px;
+      line-height: 1.7;
+    }
+
+    .card-list li {
+      padding-left: 14px;
+      position: relative;
+      margin-bottom: 6px;
+    }
+
+    .card-list li::before {
+      content: "•";
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+    }
+
+    .package-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 6px;
+      margin-top: 8px;
+      font-size: 10px;
+    }
+
+    .package-tag {
+      padding: 3px 8px;
+      border-radius: var(--radius-sm);
+      border: 1px solid rgba(148,163,184,0.35);
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    /* ROI & Impact */
+    .two-col {
+      display: grid;
+      grid-template-columns: minmax(0,1.1fr) minmax(0,0.9fr);
+      gap: 16px;
+    }
+
+    @media(max-width: 900px) {
+      .two-col {
+        grid-template-columns: minmax(0,1fr);
+      }
+    }
+
+    .roi-card {
+      background: radial-gradient(circle at top left, rgba(8,47,73,0.5), rgba(15,23,42,1));
+      padding: 14px 14px 12px;
+    }
+
+    body.light-theme .roi-card {
+      background: #ffffff;
+    }
+
+    .roi-row {
+      display: flex;
+      gap: 12px;
+      margin-top: 10px;
+      font-size: 11px;
+    }
+
+    .roi-item {
+      flex: 1;
+      padding: 10px;
+      border-radius: var(--radius-md);
+      border: 1px dashed rgba(148,163,184,0.5);
+      background: rgba(15,23,42,0.8);
+    }
+
+    body.light-theme .roi-item {
+      background: #f9fafb;
+      border-color: #e5e7eb;
+    }
+
+    .roi-item strong {
+      font-size: 13px;
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    .roi-highlight {
+      font-size: 22px;
+      margin: 8px 0 2px;
+    }
+
+    .roi-highlight span {
+      font-size: 11px;
+      color: var(--muted);
+      margin-left: 4px;
+    }
+
+    .roi-note {
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 6px;
+    }
+
+    .impact-card {
+      border: 1px solid rgba(56,189,248,0.7);
+      background: radial-gradient(circle at top right, rgba(8,47,73,0.7), rgba(15,23,42,0.96));
+      padding: 14px 14px 12px;
+    }
+
+    body.light-theme .impact-card {
+      background: #eff6ff;
+      border-color: #38bdf8;
+    }
+
+    .impact-stat {
+      font-size: 22px;
+      margin-bottom: 4px;
+    }
+
+    .impact-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 3px 8px;
+      border-radius: var(--radius-sm);
+      border: 1px solid rgba(56,189,248,0.7);
+      font-size: 11px;
+      margin-bottom: 6px;
+    }
+
+    /* Patents & Tech */
+    .patent-grid {
+      display: grid;
+      grid-template-columns: minmax(0,1.2fr) minmax(0,0.8fr);
+      gap: 16px;
+    }
+
+    @media(max-width: 900px) {
+      .patent-grid {
+        grid-template-columns: minmax(0,1fr);
+      }
+    }
+
+    .patent-card {
+      padding: 14px 14px 12px;
+      background: radial-gradient(circle at top left, rgba(31,41,55,0.6), rgba(15,23,42,1));
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    body.light-theme .patent-card {
+      background: #ffffff;
+    }
+
+    .patent-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 3px 8px;
+      border-radius: var(--radius-sm);
+      border: 1px solid rgba(148,163,184,0.35);
+      font-size: 11px;
+      margin-bottom: 6px;
       color: #e5e7eb;
     }
 
-    .contact-card input::placeholder,
-    .contact-card textarea::placeholder {
-      color: #6b7280;
+    body.light-theme .patent-badge {
+      color: #111827;
+      background: #f3f4f6;
+      border-color: #e5e7eb;
     }
 
-    .contact-card input:focus,
-    .contact-card textarea:focus,
-    .contact-card select:focus {
-      border-color: #3b82f6;
-      box-shadow: 0 0 0 1px rgba(59, 130, 246, 0.35);
+    .patent-list {
+      margin: 8px 0;
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.7;
     }
 
+    .patent-list li {
+      margin-bottom: 4px;
+      padding-left: 14px;
+      position: relative;
+    }
+
+    .patent-list li::before {
+      content: "▸";
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-size: 9px;
+      top: 2px;
+    }
+
+    .chip-row {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-top: 8px;
+    }
+
+    .chip {
+      padding: 4px 9px;
+      border-radius: var(--radius-sm);
+      border: 1px solid rgba(148,163,184,0.35);
+      font-size: 11px;
+      color: var(--muted);
+      background: rgba(15,23,42,0.8);
+    }
+
+    /* Contact */
+    .contact-container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+      gap: 24px;
+    }
+
+    @media(max-width: 900px) {
+      .contact-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .contact-form-card {
+      background: radial-gradient(circle at top left, rgba(31, 41, 55, 0.5), rgba(15, 23, 42, 0.96));
+      padding: 20px 20px 18px;
+    }
+
+    body.light-theme .contact-form-card {
+      background: #ffffff;
+    }
+
+    .contact-form-card h3 {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+
+    .contact-form-card p {
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 16px;
+      line-height: 1.7;
+    }
+
+    .form-group {
+      margin-bottom: 14px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width: 100%;
+      border-radius: 8px;
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      padding: 10px 12px;
+      font-size: 12px;
+      background: rgba(2, 6, 23, 0.9);
+      color: var(--text);
+      font-family: inherit;
+      outline: none;
+      transition: all 0.2s ease;
+    }
+
+    .form-group input::placeholder,
+    .form-group textarea::placeholder {
+      color: rgba(148, 163, 184, 0.5);
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 1px rgba(34, 197, 94, 0.35);
+    }
+
+    body.light-theme .form-group input,
+    body.light-theme .form-group textarea,
+    body.light-theme .form-group select {
+      background: #ffffff;
+      color: #0f172a;
+      border-color: #d1d5db;
+    }
+
+    body.light-theme .form-group input::placeholder,
+    body.light-theme .form-group textarea::placeholder {
+      color: #9ca3af;
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    .contact-info-card {
+      background: radial-gradient(circle at top right, rgba(8, 47, 73, 0.5), rgba(15, 23, 42, 0.96));
+      padding: 20px 20px 18px;
+    }
+
+    body.light-theme .contact-info-card {
+      background: #f9fafb;
+    }
+
+    .contact-info-card h3 {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 14px;
+    }
+
+    .contact-item {
+      margin-bottom: 16px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+    }
+
+    .contact-item:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .contact-item-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+
+    .contact-item-value {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text);
+    }
+
+    .contact-item-value a {
+      color: var(--accent);
+      text-decoration: none;
+      transition: opacity 0.2s ease;
+    }
+
+    .contact-item-value a:hover {
+      opacity: 0.8;
+    }
+
+    .contact-hours {
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid rgba(148, 163, 184, 0.2);
+    }
+
+    .contact-hours-title {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .contact-hours-item {
+      font-size: 11px;
+      color: var(--muted);
+      margin-bottom: 3px;
+    }
+
+    /* Newsletter */
+    .newsletter {
+      border-radius: 20px;
+      border: 1px solid rgba(148,163,184,0.22);
+      background: radial-gradient(circle at top, rgba(34,197,94,0.18), rgba(15,23,42,0.98));
+      padding: 16px 16px 14px;
+      display: grid;
+      grid-template-columns: minmax(0,1.2fr) minmax(0,0.8fr);
+      gap: 16px;
+      align-items: center;
+    }
+
+    body.light-theme .newsletter {
+      background: #ecfdf5;
+      border-color: #bbf7d0;
+    }
+
+    @media(max-width: 900px) {
+      .newsletter {
+        grid-template-columns: minmax(0,1fr);
+      }
+    }
+
+    .newsletter-title {
+      font-size: 15px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .newsletter-text {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .newsletter-form {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .newsletter-form .input {
+      border-radius: 999px;
+    }
+
+    .newsletter-note {
+      font-size: 10px;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    /* Footer */
     footer {
-      border-top: 1px solid rgba(31, 41, 55, 0.9);
-      color: #6b7280;
+      padding: 24px 0 28px;
+      border-top: 1px solid rgba(148,163,184,0.25);
+      margin-top: 16px;
+      font-size: 11px;
+      color: var(--muted);
+      background: transparent;
     }
 
-    @media (max-width: 767.98px) {
-      .hero {
-        padding-top: 5.5rem;
+    body.light-theme footer {
+      background: #ffffff;
+      border-top-color: #e5e7eb;
+    }
+
+    .footer-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: flex-end;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      font-size: 11px;
+    }
+
+    @media(max-width: 600px) {
+      .nav-links {
+        display: none;
+      }
+
+      .nav-bottom {
+        justify-content: flex-end;
+        flex-wrap: wrap;
+      }
+
+      .btn {
+        padding: 9px 14px;
+        font-size: 11px;
       }
     }
   </style>
 </head>
 <body>
-  <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg fixed-top border-bottom border-dark">
-    <div class="container">
-      <a class="navbar-brand fw-semibold text-light" href="#hero">
-        aethelon<span>ai</span>
-      </a>
-      <button
-        class="navbar-toggler text-light border-0"
-        type="button"
-        data-bs-toggle="collapse"
-        data-bs-target="#navbarNav"
-        aria-controls="navbarNav"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
-        <span class="navbar-toggler-icon">
-          <span class="d-inline-block bg-light" style="width:20px;height:2px;display:block;margin:3px 0;"></span>
-          <span class="d-inline-block bg-light" style="width:20px;height:2px;display:block;margin:3px 0;"></span>
-          <span class="d-inline-block bg-light" style="width:20px;height:2px;display:block;margin:3px 0;"></span>
-        </span>
-      </button>
-      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-        <ul class="navbar-nav align-items-lg-center">
-          <li class="nav-item">
-            <a class="nav-link text-light" href="#what-we-do">What we do</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link text-light" href="#packages">Packages</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link text-light" href="#how-it-works">How it works</a>
-          </li>
-          <li class="nav-item ms-lg-3 mt-3 mt-lg-0">
-            <a class="btn btn-sm btn-primary-custom" href="#contact">Get my plan</a>
-          </li>
-        </ul>
+  <!-- NAVBAR -->
+  <header class="navbar">
+    <div class="container nav-inner">
+      <div class="nav-top">
+        <nav class="nav-links">
+          <a href="#roi">ROI & Savings</a>
+          <a href="#impact">Carbon Impact</a>
+          <a href="#patents">Tech & Patents</a>
+          <a href="#contact">Contact</a>
+          <a href="#newsletter">Newsletter</a>
+          <a href="#packages" style="color: var(--accent); font-weight: 600;">View packages</a>
+        </nav>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+          <div class="theme-toggle-dot">
+            <span id="themeIcon">☀️</span>
+          </div>
+        </button>
+      </div>
+
+      <div class="nav-bottom">
+        <div class="logo">
+          <div class="logo-mark"></div>
+          <div>
+            <div>aethelon.ai</div>
+            <div style="font-size:8px; letter-spacing:0.18em; text-transform:uppercase; color:#6b7280;">
+              Make Homes smarter, energy-efficient
+            </div>
+          </div>
+        </div>
+        <div style="flex: 1;"></div>
+        <button class="btn btn-accent" onclick="document.getElementById('queue').scrollIntoView({behavior:'smooth'})">
+          Join waitlist
+        </button>
       </div>
     </div>
-  </nav>
+  </header>
 
-  <!-- Hero -->
-  <section class="hero" id="hero">
-    <div class="hero-bg-glow"></div>
-    <div class="container">
-      <div class="row align-items-center g-5">
-        <div class="col-lg-6">
-          <div class="hero-badge mb-3">
-            <span>●</span>
-            <div>AI‑driven energy automation for modern homes</div>
+  <!-- HERO -->
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <div class="pill">
+            <span class="pill-badge">New • Bengaluru 2026</span>
+            <span>Energy-first home automation</span>
           </div>
-          <h1 class="hero-title mb-3">
-            Cut your power bill with <span>AethelonAI smart AC, heater & geyser control</span>.
+          <h1 class="hero-title">
+            Make your home feel premium,<br />
+            while cutting energy use by <span>up to 20%</span>.
           </h1>
-          <p class="hero-subtitle mb-4">
-            AethelonAI layers intelligent automation on top of Google Home and Aqara to keep your home comfortable while using less electricity – without replacing your existing devices.
+          <p class="hero-subtitle">
+            We design and install end‑to‑end smart home systems—curtains, lights, AC, geyser, toilets, and more—
+            tuned to look luxurious and pay you back through lower electricity bills.
           </p>
-          <div class="d-flex flex-wrap gap-3 mb-4">
-            <a href="#contact" class="btn btn-primary-custom">
-              Book a free home assessment
-            </a>
-            <a href="#packages" class="btn btn-outline-custom">
-              View packages
-            </a>
-          </div>
-          <div class="hero-highlight">
-            <div class="item">
-              <div class="dot"></div>
-              <span>Optimized AC, heater and geyser schedules</span>
+
+          <div class="hero-metrics">
+            <div class="metric">
+              <div class="metric-label">Typical Energy Savings</div>
+              <div class="metric-value">15–20%<span>on annual electricity</span></div>
             </div>
-            <div class="item">
-              <div class="dot"></div>
-              <span>Works with TP‑Link, Qubo, Philips, Aqara and more</span>
+            <div class="metric">
+              <div class="metric-label">Payback Period</div>
+              <div class="metric-value">3–5 years<span>depending on usage</span></div>
             </div>
-            <div class="item">
-              <div class="dot"></div>
-              <span>One unified app experience for your smart home</span>
+            <div class="metric">
+              <div class="metric-label">Supported Homes</div>
+              <div class="metric-value">1–5 BHK<span>retrofit & new build</span></div>
             </div>
           </div>
-        </div>
 
-        <div class="col-lg-5 offset-lg-1">
-          <div class="hero-card">
-            <div class="d-flex justify-content-between mb-3">
-              <div>
-                <div class="hero-tag mb-1">Today’s usage</div>
-                <div class="hero-metric" id="hero-usage">8.4 kWh</div>
-                <div class="text-success small">Estimated savings: 18% vs typical</div>
-              </div>
-              <div class="text-end">
-                <div class="hero-tag mb-1">Home comfort</div>
-                <div class="badge-soft">
-                  AC 24°C • Heater eco
-                </div>
-              </div>
-            </div>
-
-            <div class="hero-mini-chart mb-3"></div>
-
-            <div class="row g-3">
-              <div class="col-4">
-                <div class="small text-uppercase text-muted">AC Saver</div>
-                <div class="fw-semibold">Enabled</div>
-              </div>
-              <div class="col-4">
-                <div class="small text-uppercase text-muted">Geyser Saver</div>
-                <div class="fw-semibold">Scheduled</div>
-              </div>
-              <div class="col-4">
-                <div class="small text-uppercase text-muted">Heater Saver</div>
-                <div class="fw-semibold">Auto</div>
-              </div>
-            </div>
-
-            <hr class="border-secondary-subtle my-3" />
-
-            <div class="d-flex justify-content-between align-items-center">
-              <div>
-                <div class="small text-muted">This month (est.)</div>
-                <div class="fw-semibold">₹ 2,150</div>
-                <div class="small text-success">↓ ~₹ 480 vs baseline</div>
-              </div>
-              <button class="btn btn-sm btn-outline-custom" onclick="scrollToContact()">
-                Get a similar setup
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- What we do -->
-  <section class="section" id="what-we-do">
-    <div class="container">
-      <div class="row mb-4 align-items-end">
-        <div class="col-md-7">
-          <h2 class="section-title">What we do</h2>
-          <p class="section-subtitle">
-            AethelonAI turns your existing smart devices into an AI‑assisted energy system that keeps your rooms comfortable and your electricity spend in check.
-          </p>
-        </div>
-      </div>
-
-      <div class="row g-4">
-        <div class="col-md-4">
-          <div class="card-soft p-4 h-100">
-            <div class="badge-soft mb-2">AC & heater intelligence</div>
-            <h5 class="mb-3">Comfort with less energy</h5>
-            <ul class="list-check">
-              <li>
-                <span>✓</span>
-                <div>Temperature‑aware AC and heater control tuned for efficiency, not over‑cooling or over‑heating.</div>
-              </li>
-              <li>
-                <span>✓</span>
-                <div>Smart schedules that match when you are actually home and active.</div>
-              </li>
-              <li>
-                <span>✓</span>
-                <div>Uses motion and presence to avoid conditioning empty rooms.</div>
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="col-md-4">
-          <div class="card-soft p-4 h-100">
-            <div class="badge-soft mb-2">Geyser protection</div>
-            <h5 class="mb-3">Hot water, no long‑running geysers</h5>
-            <ul class="list-check">
-              <li>
-                <span>✓</span>
-                <div>Auto‑off logic so geysers are never left on for hours by mistake.</div>
-              </li>
-              <li>
-                <span>✓</span>
-                <div>Morning and evening heating slots tied to your usage patterns.</div>
-              </li>
-              <li>
-                <span>✓</span>
-                <div>Energy‑aware control via smart plugs, timers and sensors.</div>
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="col-md-4">
-          <div class="card-soft p-4 h-100">
-            <div class="badge-soft mb-2">Multi‑brand, one app</div>
-            <h5 class="mb-3">Built on platforms you trust</h5>
-            <ul class="list-check">
-              <li>
-                <span>✓</span>
-                <div>Works on top of Google Home and Aqara smart home platforms.</div>
-              </li>
-              <li>
-                <span>✓</span>
-                <div>Plays nicely with TP‑Link, Qubo, Philips, Aqara and other compatible brands.</div>
-              </li>
-              <li>
-                <span>✓</span>
-                <div>AethelonAI becomes your single control and insights layer for energy automation.</div>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Packages -->
-  <section class="section" id="packages">
-    <div class="container">
-      <div class="row mb-4 align-items-end">
-        <div class="col-md-7">
-          <h2 class="section-title">Packages</h2>
-          <p class="section-subtitle">
-            Pick a starting point, and we tailor the actual setup to your flat, devices and comfort preferences. All packages are custom‑quoted.
-          </p>
-        </div>
-      </div>
-
-      <div class="row g-4">
-        <!-- Starter -->
-        <div class="col-md-4">
-          <div class="card-soft pricing-card p-4 h-100">
-            <h6 class="text-uppercase text-muted small mb-1">Starter</h6>
-            <h4 class="mb-1">For 1–2 BHK</h4>
-            <p class="text-muted small mb-3">Perfect for your first step into smart energy automation.</p>
-            <p class="pricing-price text-muted mb-3">Custom quote</p>
-            <ul class="list-check mb-4">
-              <li>
-                <span>✓</span>
-                <div>AC + geyser automation in one primary room.</div>
-              </li>
-              <li>
-                <span>✓</span>
-                <div>Setup of 2–3 smart plugs and core Google Home routines.</div>
-              </li>
-              <li>
-                <span>✓</span>
-                <div>Simple AethelonAI app view for usage and key alerts.</div>
-              </li>
-            </ul>
-            <button class="btn btn-outline-custom w-100" onclick="scrollToContact('Starter')">
-              Request Starter package
+          <div class="hero-actions">
+            <button class="btn btn-accent" onclick="document.getElementById('queue').scrollIntoView({behavior:'smooth'})">
+              Get early-bird discount
+            </button>
+            <button class="btn btn-ghost" onclick="document.getElementById('packages').scrollIntoView({behavior:'smooth'})">
+              Explore Basic / Custom / Premium
             </button>
           </div>
-        </div>
+          <div class="hero-note">
+            Your investment returns through lower bills, and then continues as monthly profit in saved energy.
+          </div>
 
-        <!-- Comfort -->
-        <div class="col-md-4">
-          <div class="card-soft pricing-card highlight p-4 h-100">
-            <div class="pricing-pill">Most chosen</div>
-            <h6 class="text-uppercase text-muted small mb-1">Comfort</h6>
-            <h4 class="mb-1">For bigger setups</h4>
-            <p class="text-muted small mb-3">Designed for larger homes or multiple high‑usage rooms.</p>
-            <p class="pricing-price text-muted mb-3">Custom quote</p>
-            <ul class="list-check mb-4">
-              <li>
-                <span>✓</span>
-                <div>AC + heater + geyser automation across 2–3 rooms.</div>
-              </li>
-              <li>
-                <span>✓</span>
-                <div>Advanced presence‑based rules and seasonal profiles (summer / winter / monsoon).</div>
-              </li>
-              <li>
-                <span>✓</span>
-                <div>Energy summaries and usage trends inside the AethelonAI app.</div>
-              </li>
-            </ul>
-            <button class="btn btn-primary-custom w-100" onclick="scrollToContact('Comfort')">
-              Book Comfort consultation
-            </button>
+          <div class="hero-badges-row">
+            <div class="hero-badge">Matter & Thread ready</div>
+            <div class="hero-badge">Works with existing devices</div>
+            <div class="hero-badge">Encrypted, privacy‑first design</div>
           </div>
         </div>
 
-        <!-- Premium -->
-        <div class="col-md-4">
-          <div class="card-soft pricing-card p-4 h-100">
-            <h6 class="text-uppercase text-muted small mb-1">Premium (Aqara)</h6>
-            <h4 class="mb-1">For premium homes</h4>
-            <p class="text-muted small mb-3">Ideal for new or high‑end installations with Aqara at the core.</p>
-            <p class="pricing-price text-muted mb-3">Custom quote</p>
-            <ul class="list-check mb-4">
-              <li>
-                <span>✓</span>
-                <div>Full Aqara‑based multi‑room scenes and deep sensor integrations.</div>
-              </li>
-              <li>
-                <span>✓</span>
-                <div>Detailed analytics for AC, heater and geyser usage with savings estimates.</div>
-              </li>
-              <li>
-                <span>✓</span>
-                <div>Priority onboarding, support and continuous optimisation from AethelonAI.</div>
-              </li>
-            </ul>
-            <button class="btn btn-outline-custom w-100" onclick="scrollToContact('Premium (Aqara)')">
-              Talk to an expert
-            </button>
+        <aside class="hero-panel" id="queue">
+          <div class="hero-panel-header">
+            <span>
+              <div class="queue-count-dot"></div>
+              <span>Launch waitlist</span>
+              <small>Founding customers</small>
+            </span>
+            <div class="queue-count">
+              <span class="queue-number" id="queueCount">237</span> homes in queue
+              <span class="queue-badge">Real‑time</span>
+            </div>
           </div>
-        </div>
-      </div>
-    </div>
-  </section>
 
-  <!-- How it works -->
-  <section class="section" id="how-it-works">
-    <div class="container">
-      <div class="row mb-4 align-items-end">
-        <div class="col-md-7">
-          <h2 class="section-title">How AethelonAI works</h2>
-          <p class="section-subtitle">
-            A simple three‑step journey that turns your existing ACs, heaters, geysers and sensors into an AI‑assisted energy‑saving setup.
-          </p>
-        </div>
-      </div>
+          <div class="queue-bar">
+            <div class="queue-bar-inner"></div>
+          </div>
 
-      <div class="row g-4">
-        <div class="col-md-4">
-          <div class="card-soft p-4 h-100">
-            <div class="badge-soft mb-2">Step 1</div>
-            <h5 class="mb-2">Home & device review</h5>
-            <p class="text-muted small mb-0">
-              We map your rooms, ACs, heaters, geysers and smart plugs, plus understand your typical routine and electricity costs.
+          <div class="coupon-banner">
+            <div>
+              Early customers lock in a flat
+              <strong>launch discount</strong> on any package.
+              <div class="coupon-tagline">Use your unique code during consultation.</div>
+            </div>
+            <div class="coupon-code" id="couponCode">
+              AAI‑EARLY‑2026
+            </div>
+          </div>
+
+          <div class="queue-form">
+            <h4>Reserve your slot in the energy‑saver queue</h4>
+            <p>
+              Tell us about your home and preferences.
+              We’ll contact you in order of the queue with your discount code and a tailored proposal.
             </p>
-          </div>
-        </div>
-
-        <div class="col-md-4">
-          <div class="card-soft p-4 h-100">
-            <div class="badge-soft mb-2">Step 2</div>
-            <h5 class="mb-2">Automation design & setup</h5>
-            <p class="text-muted small mb-0">
-              We configure Google Home and Aqara automations, connect sensors, and deploy tested AethelonAI recipes for AC, heater and geyser savings.
-            </p>
-          </div>
-        </div>
-
-        <div class="col-md-4">
-          <div class="card-soft p-4 h-100">
-            <div class="badge-soft mb-2">Step 3</div>
-            <h5 class="mb-2">Monitor & refine in the app</h5>
-            <p class="text-muted small mb-0">
-              You see usage and savings inside the AethelonAI app while we fine‑tune schedules, temperature bands and rules to match your comfort.
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Contact -->
-  <section class="section pb-5" id="contact">
-    <div class="container">
-      <div class="row mb-4 align-items-end">
-        <div class="col-md-7">
-          <h2 class="section-title">Get started with AethelonAI</h2>
-          <p class="section-subtitle">
-            Tell us a bit about your home and devices. We’ll respond with a suggested package, an estimated savings range and a clear next step.
-          </p>
-        </div>
-      </div>
-
-      <div class="row g-4">
-        <div class="col-lg-7">
-          <div class="card-soft contact-card p-4">
-            <form onsubmit="handleFormSubmit(event)">
-              <div class="row g-3">
-                <div class="col-md-6">
-                  <label class="form-label small text-muted">Name</label>
-                  <input type="text" class="form-control form-control-sm" required />
+            <form onsubmit="event.preventDefault(); joinQueue();">
+              <div class="form-row">
+                <div class="form-col">
+                  <label class="form-label">Name</label>
+                  <input class="input" type="text" id="name" placeholder="Full name" required />
                 </div>
-                <div class="col-md-6">
-                  <label class="form-label small text-muted">Email</label>
-                  <input type="email" class="form-control form-control-sm" required />
+                <div class="form-col">
+                  <label class="form-label">Phone / WhatsApp</label>
+                  <input class="input" type="tel" id="phone" placeholder="+91‑" required />
                 </div>
-                <div class="col-md-6">
-                  <label class="form-label small text-muted">Phone</label>
-                  <input type="tel" class="form-control form-control-sm" />
+              </div>
+
+              <div class="form-row">
+                <div class="form-col">
+                  <label class="form-label">Email</label>
+                  <input class="input" type="email" id="email" placeholder="you@example.com" />
                 </div>
-                <div class="col-md-6">
-                  <label class="form-label small text-muted">City</label>
-                  <input type="text" class="form-control form-control-sm" />
+                <div class="form-col">
+                  <label class="form-label">City</label>
+                  <input class="input" type="text" id="city" placeholder="e.g., Bengaluru" />
                 </div>
-                <div class="col-md-6">
-                  <label class="form-label small text-muted">Home size (BHK)</label>
-                  <select class="form-select form-select-sm">
+              </div>
+
+              <div class="form-row">
+                <div class="form-col">
+                  <label class="form-label">Home type</label>
+                  <select id="homeType">
+                    <option>Apartment</option>
+                    <option>Independent house</option>
+                    <option>Villa</option>
+                    <option>Other</option>
+                  </select>
+                </div>
+                <div class="form-col">
+                  <label class="form-label">Configuration</label>
+                  <select id="bhk">
                     <option>1 BHK</option>
                     <option>2 BHK</option>
                     <option>3 BHK</option>
                     <option>4+ BHK</option>
                   </select>
                 </div>
-                <div class="col-md-6">
-                  <label class="form-label small text-muted">Current monthly bill (approx)</label>
-                  <input type="text" class="form-control form-control-sm" placeholder="e.g. ₹2500" />
-                </div>
-                <div class="col-12">
-                  <label class="form-label small text-muted">Preferred package</label>
-                  <select class="form-select form-select-sm" id="preferredPackage">
-                    <option value="">Not sure yet</option>
-                    <option value="Starter">Starter</option>
-                    <option value="Comfort">Comfort</option>
-                    <option value="Premium (Aqara)">Premium (Aqara)</option>
+              </div>
+
+              <div class="form-row">
+                <div class="form-col">
+                  <label class="form-label">Preferred package</label>
+                  <select id="packagePref">
+                    <option>Basic – Essentials</option>
+                    <option>Customized – Mix & match</option>
+                    <option>Premium – Full experience</option>
+                    <option>Not sure yet</option>
                   </select>
                 </div>
-                <div class="col-12">
-                  <label class="form-label small text-muted">Anything else we should know?</label>
-                  <textarea class="form-control form-control-sm" rows="3" placeholder="Number of ACs, heaters, geysers, smart plugs, any special requirements, etc."></textarea>
+                <div class="form-col">
+                  <label class="form-label">Priority</label>
+                  <select id="priority">
+                    <option>Energy savings</option>
+                    <option>Luxury / premium feel</option>
+                    <option>Both equally</option>
+                  </select>
                 </div>
               </div>
-              <div class="d-flex align-items-center gap-3 mt-4">
-                <button type="submit" class="btn btn-primary-custom">
-                  Get my AethelonAI plan
+
+              <div class="queue-checkbox">
+                <input type="checkbox" id="newsletterOptInQueue" checked />
+                <label for="newsletterOptInQueue">Subscribe to our energy‑saving tips newsletter</label>
+              </div>
+
+              <div class="queue-footer">
+                <button type="submit" class="btn btn-accent">
+                  Join queue & get code
                 </button>
-                <div class="small text-muted" id="formStatus"></div>
+                <div class="queue-eta">
+                  Current wait: <strong>~2–3 weeks</strong> for a consultation slot.
+                </div>
               </div>
             </form>
           </div>
+
+          <div class="hero-badges-row">
+            <div class="hero-badge">Transparent ROI calculator</div>
+            <div class="hero-badge">No spam, no reselling of data</div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- PACKAGES -->
+    <section id="packages">
+      <div class="container">
+        <div class="section-header">
+          <div>
+            <div class="section-kicker">Packages & Pricing</div>
+            <h2 class="section-title">Choose how far you want to automate</h2>
+          </div>
+          <p class="section-subtitle">
+            All packages focus on energy efficiency, premium experience, and compatibility with your existing devices.
+            Start simple or go all‑in from day one.
+          </p>
         </div>
 
-        <div class="col-lg-5">
-          <div class="card-soft p-4 h-100">
-            <h5 class="mb-3">What you’ll receive</h5>
-            <ul class="list-check mb-3">
-              <li>
-                <span>✓</span>
-                <div>A recommended AethelonAI package aligned to your home and devices.</div>
-              </li>
-              <li>
-                <span>✓</span>
-                <div>A high‑level projected savings band for AC, heater and geyser usage.</div>
-              </li>
-              <li>
-                <span>✓</span>
-                <div>A simple overview of the automations we’ll configure on Google Home and Aqara for you.</div>
-              </li>
+        <div class="packages-grid">
+          <div class="card">
+            <div class="card-label">Starter</div>
+            <div class="card-title">Basic – Smart Essentials</div>
+            <div class="card-pill">
+              Ideal for new users · Can be upgraded later
+            </div>
+            <div class="card-price">
+              ₹ (entry‑level)<span>for typical 2–3 BHK</span>
+            </div>
+            <p class="card-note">
+              Focus on lights and comfort automations that instantly make the home feel more premium, while cutting wasted energy.
+            </p>
+            <ul class="card-list">
+              <li>Smart RGB and white lighting with scenes for living, bedroom, and pathways.</li>
+              <li>Smart geyser control with schedules and auto‑cutoff to avoid idle heating.</li>
+              <li>Motion‑based pathway lights for night safety and aging‑in‑place comfort.</li>
+              <li>Mobile app + basic automation routines (away, sleep, movie, work).</li>
+              <li>Works with selected existing switches and devices where possible.</li>
             </ul>
-            <p class="text-muted small mb-0">
-              We usually reply within one business day with a proposal and a slot for a quick discovery call.
+            <div class="package-footer">
+              <div class="package-tag">Typical savings: ~10–15% on bills</div>
+              <button class="btn btn-ghost" onclick="document.getElementById('queue').scrollIntoView({behavior:'smooth'})">
+                Shortlist Basic →
+              </button>
+            </div>
+          </div>
+
+          <div class="card card-highlight">
+            <div class="card-label">Most Popular</div>
+            <div class="card-title">Customized – Your Way</div>
+            <div class="card-pill">
+              Co‑design with our team · Fits your lifestyle
+            </div>
+            <div class="card-price">
+              ₹ (mid‑range)<span>depends on chosen modules</span>
+            </div>
+            <p class="card-note">
+              Choose where to go deeper: curtain automation, AC optimization, smart toilets, voice control, and more. We map your daily life and tune the system around it.
+            </p>
+            <ul class="card-list">
+              <li>Everything in Basic, plus choice of 3–6 additional modules (curtains, AC, toilet, door lock, scenes).</li>
+              <li>Energy‑aware AC control tuned for Bengaluru weather to reduce wastage without compromising comfort.</li>
+              <li>Integration with your existing ecosystem (Alexa / Google / Apple where compatible).</li>
+              <li>Zone‑based automation (bedrooms vs living vs kitchen) to avoid over‑automation.</li>
+              <li>Dedicated design session + digital twin of your home in the app.</li>
+            </ul>
+            <div class="package-footer">
+              <div class="package-tag">Typical savings: ~15–20% on bills</div>
+              <button class="btn btn-accent" onclick="document.getElementById('queue').scrollIntoView({behavior:'smooth'})">
+                Choose Customized →
+              </button>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-label">Flagship</div>
+            <div class="card-title">Premium – Full Experience</div>
+            <div class="card-pill">
+              End‑to‑end automation · Designed like a super‑EV
+            </div>
+            <div class="card-price">
+              ₹ (high‑end)<span>for 3–5 BHK luxury homes</span>
+            </div>
+            <p class="card-note">
+              Everything in the home is orchestrated by a central energy‑intelligent hub—curtains, toilets, geyser, AC, lighting, AV—designed to feel like living inside a well‑tuned EV cockpit.
+            </p>
+            <ul class="card-list">
+              <li>Whole‑home curtain, lighting, AC, geyser, and toilet automation with advanced scenes.</li>
+              <li>Adaptive energy modes that respond to tariff time, sunlight, and occupancy.</li>
+              <li>Detailed energy dashboards, carbon footprint tracking, and savings reports.</li>
+              <li>Advanced wellness features: circadian lighting, night‑safe toilets, gentle wake‑up routines.</li>
+              <li>Priority support, health checks, and extended warranty options.</li>
+            </ul>
+            <div class="package-footer">
+              <div class="package-tag">Best for: high‑usage, design‑led homes</div>
+              <button class="btn btn-ghost" onclick="document.getElementById('queue').scrollIntoView({behavior:'smooth'})">
+                Explore Premium →
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ROI & Savings -->
+    <section id="roi">
+      <div class="container two-col">
+        <div class="roi-card">
+          <div class="section-kicker">ROI & Savings</div>
+          <h2 class="section-title" style="margin-top:4px;">See how your system pays for itself</h2>
+          <p class="section-subtitle" style="margin-top:8px;">
+            For most Indian homes, the combination of AC, geysers, and lighting drives a large part of the bill.
+            By automating them intelligently, you convert a lifestyle upgrade into a financial asset.
+          </p>
+
+          <div class="roi-row">
+            <div class="roi-item">
+              <strong>Annual spend today</strong>
+              <div class="roi-highlight">₹ XX,XXX<span>electricity per year</span></div>
+              <div class="roi-note">
+                We benchmark your actual bill and simulate different automation levels.
+              </div>
+            </div>
+            <div class="roi-item">
+              <strong>Payback window</strong>
+              <div class="roi-highlight">X–Y years<span>based on your usage</span></div>
+              <div class="roi-note">
+                As tariffs rise, well‑tuned automations protect your monthly outflow.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="impact-card" id="impact">
+          <div class="section-kicker">Carbon Impact</div>
+          <h3 style="font-size:16px; margin:6px 0 8px;">Turn lower bills into a smaller footprint</h3>
+          <div class="impact-stat">Up to 20% less wasted energy</div>
+          <div class="impact-pill">
+            Smart scheduling · Natural light · Behavior nudges
+          </div>
+          <p style="font-size:12px; color:var(--muted); margin-top:8px; line-height:1.7;">
+            When you reduce wasted electricity, you’re not only cutting your bill—you’re reducing the emissions required to power your home. Over the lifetime of a typical installation, that can add up to a significant reduction in your personal carbon footprint.
+          </p>
+          <ul style="font-size:12px; color:var(--muted); margin-top:8px; padding-left:16px; line-height:1.7;">
+            <li>Smart schedules avoid heating water or cooling rooms you aren’t using.</li>
+            <li>Optimizing natural light with automated curtains reduces lighting and sometimes cooling load.</li>
+            <li>Real‑time dashboards build awareness and better energy habits for the whole family.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tech & Patents -->
+    <section id="patents">
+      <div class="container">
+        <div class="section-header">
+          <div>
+            <div class="section-kicker">Engineered like an EV</div>
+            <h2 class="section-title">Engineered like an EV, built on open standards</h2>
+          </div>
+          <p class="section-subtitle">
+            Under the hood, our hub speaks modern protocols like Matter and Thread, so your system is not locked in.
+            On top of that, we are building our own energy‑optimization intelligence and filing patents in this space.
+          </p>
+        </div>
+
+        <div class="patent-grid">
+          <div class="patent-card">
+            <div class="patent-badge">
+              Patents in progress · Energy‑aware orchestration
+            </div>
+            <p>
+              We are actively filing patents around energy‑aware home orchestration, focusing on how different devices (AC, geyser, lights, toilets) can be coordinated to give you both comfort and measurable savings.
+            </p>
+            <ul class="patent-list">
+              <li>Algorithms that predict when to pre‑heat water and pre‑cool rooms with minimal energy spend.</li>
+              <li>Smart toilet and bathroom automations that improve hygiene while reducing water + power use.</li>
+              <li>Adaptive scenes that balance aesthetics (RGB, premium feel) with energy budgets.</li>
+            </ul>
+            <p style="margin-top:8px;">
+              This means you aren’t just installing gadgets—you’re investing in a platform that’s pushing the state‑of‑the‑art in energy‑centric automation.
+            </p>
+          </div>
+
+          <div class="patent-card">
+            <h3 style="font-size:15px; margin-bottom:6px;">Secure, compatible, and future‑ready</h3>
+            <p>
+              Our system is designed to be compatible and secure from day one, so investors, developers, and homeowners can trust the foundation.
+            </p>
+            <div class="chip-row">
+              <div class="chip">Matter / Thread ready</div>
+              <div class="chip">Offline‑first critical automations</div>
+              <div class="chip">Encrypted communication</div>
+              <div class="chip">API‑friendly for power users</div>
+            </div>
+            <p style="margin-top:10px;">
+              Critical automations run locally on the hub, so even if the internet drops, your lights, curtains, geyser, and AC scenes continue to work reliably.
             </p>
           </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <footer class="py-3 mt-3">
-    <div class="container d-flex flex-column flex-md-row justify-content-between align-items-center gap-2">
-      <div class="small">
-        © <span id="year"></span> AethelonAI. All rights reserved.
+    <!-- CONTACT -->
+    <section id="contact">
+      <div class="container contact-container">
+        <div class="section-header">
+          <div>
+            <div class="section-kicker">Contact & Consultation</div>
+            <h2 class="section-title">Tell us about your home</h2>
+          </div>
+          <p class="section-subtitle">
+            Share a few details about your home and what you care about most. We’ll get back with a tailored proposal and transparent ROI estimate.
+          </p>
+        </div>
+
+        <div class="contact-grid">
+          <div class="contact-form-card">
+            <h3>Request a consultation</h3>
+            <p>
+              Fill in this short form and we’ll schedule a call or visit. No spam, no reselling of data—ever.
+            </p>
+            <form onsubmit="event.preventDefault(); submitContact();">
+              <div class="form-group">
+                <label for="contactName">Name</label>
+                <input type="text" id="contactName" placeholder="Full name" required />
+              </div>
+              <div class="form-group">
+                <label for="contactPhone">Phone / WhatsApp</label>
+                <input type="tel" id="contactPhone" placeholder="+91‑" required />
+              </div>
+              <div class="form-group">
+                <label for="contactEmail">Email</label>
+                <input type="email" id="contactEmail" placeholder="you@example.com" />
+              </div>
+              <div class="form-group">
+                <label for="contactCity">City</label>
+                <input type="text" id="contactCity" placeholder="e.g., Bengaluru" />
+              </div>
+              <div class="form-group">
+                <label for="contactMessage">What would you like to focus on?</label>
+                <textarea id="contactMessage" placeholder="Tell us about your home, usage patterns, or any specific rooms/devices you want to optimize."></textarea>
+              </div>
+              <button type="submit" class="btn btn-accent">
+                Request call back
+              </button>
+            </form>
+          </div>
+
+          <div class="contact-info-card">
+            <h3>Reach us directly</h3>
+            <div class="contact-item">
+              <div class="contact-item-label">Call / WhatsApp</div>
+              <div class="contact-item-value">
+                <a href="tel:+91XXXXXXXXXX">+91‑XXXXXXXXXX</a>
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="contact-item-label">Email</div>
+              <div class="contact-item-value">
+                <a href="mailto:hello@aethelon.ai">hello@aethelon.ai</a>
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="contact-item-label">Location</div>
+              <div class="contact-item-value">
+                Bengaluru, India
+              </div>
+            </div>
+
+            <div class="contact-hours">
+              <div class="contact-hours-title">Consultation hours</div>
+              <div class="contact-hours-item">Mon–Fri: 10:00 AM – 7:00 PM</div>
+              <div class="contact-hours-item">Sat: 11:00 AM – 4:00 PM</div>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="small">
-        Built on top of Google Home and Aqara to power intelligent home energy automation.
+    </section>
+
+    <!-- NEWSLETTER -->
+    <section id="newsletter">
+      <div class="container">
+        <div class="newsletter">
+          <div>
+            <div class="newsletter-title">Get 1–2 practical energy ideas per month</div>
+            <div class="newsletter-text">
+              Short, actionable emails to help you reduce bills and make your home feel more premium—without constant upsell.
+            </div>
+          </div>
+          <div>
+            <form class="newsletter-form" onsubmit="event.preventDefault(); subscribeNewsletter();">
+              <input class="input" type="email" id="newsletterEmail" placeholder="you@example.com" required />
+              <button type="submit" class="btn btn-accent">Subscribe</button>
+            </form>
+            <div class="newsletter-note">
+              No spam. Unsubscribe anytime.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container footer-grid">
+      <div>© <span id="year"></span> aethelon.ai · Smart, energy‑aware homes</div>
+      <div class="footer-links">
+        <a href="#packages">Packages</a>
+        <a href="#roi">ROI</a>
+        <a href="#patents">Technology</a>
+        <a href="#contact">Contact</a>
+        <a href="#queue">Join waitlist</a>
       </div>
     </div>
   </footer>
 
-  <!-- Bootstrap JS + Popper -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-
   <script>
     document.getElementById("year").textContent = new Date().getFullYear();
 
-    function scrollToContact(packageName) {
-      const contactSection = document.getElementById("contact");
-      if (packageName) {
-        const select = document.getElementById("preferredPackage");
-        if (select) select.value = packageName;
+    const themeToggle = document.getElementById("themeToggle");
+    const themeIcon = document.getElementById("themeIcon");
+
+    function setTheme(theme) {
+      if (theme === "light") {
+        document.body.classList.add("light-theme");
+        themeIcon.textContent = "🌙";
+      } else {
+        document.body.classList.remove("light-theme");
+        themeIcon.textContent = "☀️";
       }
-      contactSection.scrollIntoView({ behavior: "smooth" });
+      localStorage.setItem("theme", theme);
     }
 
-    function handleFormSubmit(e) {
-      e.preventDefault();
-      const statusEl = document.getElementById("formStatus");
-      statusEl.textContent = "Thank you. The AethelonAI team will reach out soon.";
-      setTimeout(() => {
-        statusEl.textContent = "";
-      }, 4000);
-      e.target.reset();
+    themeToggle.addEventListener("click", () => {
+      const current = document.body.classList.contains("light-theme") ? "light" : "dark";
+      setTheme(current === "light" ? "dark" : "light");
+    });
+
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme) {
+      setTheme(savedTheme);
+    }
+
+    function joinQueue() {
+      const queueCountEl = document.getElementById("queueCount");
+      const current = parseInt(queueCountEl.textContent, 10) || 0;
+      queueCountEl.textContent = current + 1;
+      alert("Thanks for joining the queue! We’ll be in touch soon.");
+    }
+
+    function submitContact() {
+      alert("Thanks for reaching out! We’ll get back to you shortly.");
+    }
+
+    function subscribeNewsletter() {
+      alert("Subscribed to the newsletter. Watch your inbox for the next update!");
     }
   </script>
 </body>
